@@ -11,6 +11,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily:{
+        merchant: ["var(--font-merchant)", 'sans-serif'],
+        "neue-montreal":["var(--font-neue-montreal)", 'sans-serif'],
+      }
     },
   },
   plugins: [],

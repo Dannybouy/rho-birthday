@@ -1,0 +1,5 @@
+export const heroSectionTexts = [
+    "REVEREND HELEN OYEGOKE, A JOY TO",
+    "BEHOLD. AN EMBODIMENT OF REVERENCE",
+    "HONOUR AND OBEDIENCE"
+]
