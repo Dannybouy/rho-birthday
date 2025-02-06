@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +18,12 @@ const merchant = localFont({
   variable: "--font-merchant",
 });
 
+const neueMontrealFontRegular = localFont({
+  src: "fonts/NeueMontreal-Regular.woff2",
+  variable: "--font-neue-montreal-regular",
+});
 const neueMontrealFont = localFont({
-  src: "fonts/NeueMontreal-Medium.otf",
+  src: "fonts/NeueMontreal-Medium.woff2",
   variable: "--font-neue-montreal",
 });
 
@@ -36,9 +41,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${merchant.variable} ${neueMontrealFont.variable} ${everettFont.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${merchant.variable} ${neueMontrealFontRegular.variable} ${neueMontrealFont.variable} ${everettFont.variable} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

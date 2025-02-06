@@ -9,8 +9,12 @@ export const testimoniesHeaderText = [
   "Helen's life blessed you?",
 ];
 
-
 export const testimonyText = [
   "Mummy has been a blessing to us in many ways, we believe only the ",
   "Lord can work this! Tell us, how have you been blessed by mummy",
+];
+
+export const viewTestimoniesHeaderText = [
+  "Read Testimonies about",
+  "Mummy Helen",
 ];
