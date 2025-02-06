@@ -18,7 +18,7 @@ export default function Preloader({ onComplete }) {
         clearInterval(interval);
         return 60;
       });
-    }, 50);
+    }, 5);
 
     return () => clearInterval(interval);
   }, []);

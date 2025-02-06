@@ -2,9 +2,13 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { heroSectionTexts } from "../utils";
 
-export default function HeroSectionText() {
+export default function HeroSectionText({
+  arrayOfText,
+  className = "", // Default empty string for className
+  containerClassName = "", // Container class name
+  textWrapperClassName = "", // Wrapper for each text item
+}) {
   const body = useRef(null);
   const isInView = useInView(body, {
     once: true,
@@ -25,16 +29,19 @@ export default function HeroSectionText() {
   };
 
   return (
-    <div ref={body} className="text-[3vw] mt-20 font-everett ">
-      {heroSectionTexts.map((text, index) => {
+    <div ref={body} className={containerClassName}>
+      {arrayOfText.map((text, index) => {
         return (
-          <div key={index} className="overflow-hidden m-0">
+          <div
+            key={index}
+            className={`overflow-hidden m-0 ${textWrapperClassName}`}
+          >
             <motion.p
               custom={index}
               variants={animation}
               initial="initial"
               animate={isInView ? "enter" : "initial"}
-              className="m-0 text-2xl md:text-4xl lg:text-[50px] leading-tight lg:leading-[72px] lg:max-w-[1200px] uppercase text-center lg:text-left "
+              className={className}
             >
               {text}
             </motion.p>
