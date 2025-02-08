@@ -5,7 +5,8 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cloud.appwrite.io",
-        pathname: "**",
+        port: "",
+        pathname: "/v1/storage/**",
       },
     ],
   },

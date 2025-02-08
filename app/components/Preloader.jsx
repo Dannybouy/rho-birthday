@@ -26,7 +26,6 @@ export default function Preloader({ onComplete }) {
   useEffect(() => {
     if (counter === 60) {
       setTimeout(() => {
-        // Animate preloader up
         gsap.to(preloaderRef.current, {
           yPercent: -100,
           duration: 0.8,
@@ -36,7 +35,7 @@ export default function Preloader({ onComplete }) {
             onComplete();
           },
         });
-      }, 1000); // Wait 1 second after reaching 60 before sliding up
+      }, 1000);
     }
   }, [counter, onComplete]);
 
@@ -45,14 +44,14 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={preloaderRef}
-      className="z-10 flex flex-col items-start justify-center bg-[#333333] text-white min-h-screen px-40"
+      className="fixed inset-0 z-50 flex flex-col items-start justify-center bg-[#333333] text-white px-4 lg:px-40 overflow-x-hidden"
     >
-      <h2 className="font-everett text-[55px] uppercase mb-20">
+      <h2 className="font-everett text-[30px] md:text-[55px] uppercase mb-20 text-center lg:text-left">
         Reverend Helen Oyegoke
       </h2>
 
-      <div>
-        <p className="font-everett text-2xl">LOADING...</p>
+      <p className="font-everett text-2xl">LOADING...</p>
+      <div className="self-end overflow-x-hidden">
         <h1 className="font-merchant text-[200px]">{Math.floor(counter)}!</h1>
       </div>
     </div>

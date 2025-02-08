@@ -16,7 +16,6 @@ const Testimony = () => {
   });
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,27 +34,24 @@ const Testimony = () => {
     e.preventDefault();
     setLoading(true);
     const bucketId = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ID;
-    const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
 
     try {
       // 1. First upload the image to storage
-      let imageUrl = null;
       let imageID = null;
       if (
+        image &&
         image.size > 0 &&
         image.type.startsWith("image/") &&
         image.size < 1024 * 1024 * 5
       ) {
         const response = await storage.createFile(bucketId, ID.unique(), image);
         imageID = response.$id;
-
-        imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${imageID}/view?project=${projectId}`;
       }
       // 2. Create the testimony document
       const payload = {
         name: formData.name,
         experience: formData.experience,
-        imageUrl: imageUrl,
+        image: imageID,
         createdAt: new Date().toISOString(),
       };
 
@@ -81,65 +77,91 @@ const Testimony = () => {
   const spinningStyle = {
     animation: "spin 10s linear infinite",
   };
+
   return (
     <div className="bg-white min-h-screen">
-      <header className="bg-gradient-to-r from-[#2f060f] to-transparent bg-black text-white flex justify-between w-full h-[600px] relative">
-        <h1 className="font-bold text-[70px] italic uppercase pl-[70px] flex items-center font-merchant leading-[80px] z-10">
-          Fill the air with <br />
-          your Testimonies
-        </h1>
-        <Image
-          src="/Group_6.svg"
-          alt="circle text"
-          width={200}
-          height={200}
-          className="absolute top-[50%] left-[40%]"
-          quality={90}
-          style={spinningStyle}
-        />
-        <Image
-          src="/bg_img1.jpg"
-          alt="testimony"
-          width={1000}
-          height={1000}
-          quality={90}
-          className="min-w-[42%] max-w-[42%] min-h-full object-cover"
-        />
+      <header className="bg-gradient-to-r from-[#2f060f] to-transparent bg-black text-white relative">
+        {/* Back Link */}
+        <Link
+          href="/"
+          className="absolute top-4 left-4 md:top-8 md:left-8 z-10"
+        >
+          <Image
+            src="/logo3.png"
+            alt="60th Anniversary Logo"
+            width={300}
+            height={300}
+            className="size-24 md:size-32"
+            priority
+            quality={95}
+          />
+        </Link>
+
+        <div className="flex flex-col lg:flex-row min-h-[400px] md:min-h-[600px]">
+          {/* Text and Spinning Logo Section */}
+          <div className="flex-1 p-4 md:p-8 lg:p-16 flex flex-col justify-center relative">
+            <h1 className="font-bold text-3xl md:text-5xl lg:text-[70px] italic uppercase font-merchant leading-tight md:leading-[80px] z-10 text-center lg:text-left">
+              Fill the air with <br />
+              your Testimonies
+            </h1>
+            <Image
+              src="/Group_6.svg"
+              alt="circle text"
+              width={200}
+              height={200}
+              className="absolute hidden lg:block top-[50%] left-[70%] -translate-y-1/2"
+              quality={90}
+              style={spinningStyle}
+            />
+
+          </div>
+
+          {/* Image Section */}
+          <div className="lg:w-[42%] h-[300px] md:h-[600px] relative">
+            <Image
+              src="/bg_img1.jpg"
+              alt="testimony"
+              fill
+              quality={90}
+              className="object-cover"
+            />
+          </div>
+        </div>
       </header>
 
-      <section className="relative bg-gradient-to-b from-[#ffe7e7] to-rgba(248, 239, 222, 0.5) min-h-[1000px]">
+      <section className="relative bg-gradient-to-b from-[#ffe7e7] to-rgba(248, 239, 222, 0.5) py-20">
+        {/* Decorative Images - Added -z-10 to put them behind */}
         <Image
           src="/lily.svg"
           alt="Left Lily"
-          className="absolute top-0 left-0"
+          className="absolute top-0 left-0 w-[100px] md:w-[300px] z-auto"
           width={300}
           height={300}
         />
         <Image
           src="/lily-right.svg"
           alt="Right Lily"
-          className="absolute top-0 right-0"
+          className="absolute top-0 right-0 w-[100px] md:w-[300px] z-auto "
           width={300}
           height={300}
         />
 
-        <div className="flex flex-col items-center justify-center ">
-          <h3 className="font-neue-montreal text-5xl mt-[120px] mb-20 text-black text-balance text-center max-w-[789px] uppercase">
+        <div className="container mx-auto px-4 max-w-6xl relative">
+          <h3 className="font-neue-montreal text-2xl md:text-4xl lg:text-5xl mb-12 md:mb-20 text-black text-center max-w-[789px] mx-auto uppercase text-balance">
             Share an experience, testimony, manner of life or message snippet of
             how mummy has blessed you
           </h3>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-center text-black "
-          >
-            <div className="flex flex-col items-center justify-center space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-8 md:space-y-14 text-black">
+            {/* Name Input - Changed label color to black */}
+            <div className="flex flex-col items-center space-y-2">
               <label
                 htmlFor="name"
-                className="text-2xl font-everett font-medium text-center"
+                className="text-xl md:text-2xl font-everett font-medium text-center"
               >
                 Tell us your name
               </label>
+
               <input
                 type="text"
                 id="name"
@@ -149,34 +171,36 @@ const Testimony = () => {
                 maxLength={25}
                 placeholder="Max. limit is 25 characters"
                 required
-                className="w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
+                className="w-full max-w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
               />
             </div>
 
-            <div className="flex flex-col items-center justify-center space-y-2 mt-14">
+            {/* Image Upload - Changed label color to black */}
+            <div className="flex flex-col items-center space-y-2">
               <label
                 htmlFor="image"
-                className="text-2xl font-everett font-medium text-center"
+                className="text-xl md:text-2xl font-everett font-medium text-center"
               >
                 Upload an image
               </label>
+
               <input
                 type="file"
                 id="image"
                 accept="image/png, image/jpeg, image/jpg"
                 onChange={handleImageChange}
                 name="image"
-                size={1024 * 1024 * 5}
                 required
-                className="w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
+                className="w-full max-w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
               />
               <p className="text-sm text-gray-500">Maximum file size is 5MB</p>
             </div>
 
-            <div className="flex flex-col items-center justify-center space-y-2 mt-14">
+            {/* Experience Textarea */}
+            <div className="flex flex-col items-center space-y-2">
               <label
                 htmlFor="experience"
-                className="text-2xl font-everett font-medium text-center"
+                className="text-xl md:text-2xl font-everett font-medium text-center"
               >
                 Share your experience here
               </label>
@@ -188,33 +212,38 @@ const Testimony = () => {
                 maxLength={555}
                 required
                 placeholder="Max. limit is 555 characters"
-                className="w-[776px] h-[250px] bg-white border border-[#dadada] rounded-lg my-8 p-5 text-base"
+                className="w-full max-w-[776px] h-[250px] bg-white border border-[#dadada] rounded-lg p-5 text-base"
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-[#ffed8f] px-10 py-5 flex justify-center items-center mt-14 rounded-[20px] text-2xl font-bold disabled:bg-[#fff8d0] disabled:text-[#dedab4] font-neue-montreal"
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
+            {/* Submit Button */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-[#ffed8f] px-8 md:px-10 py-4 md:py-5 rounded-[20px] text-xl md:text-2xl font-bold disabled:bg-[#fff8d0] disabled:text-[#dedab4] font-neue-montreal transition-colors hover:bg-[#ffe55c]"
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </button>
+            </div>
           </form>
 
-          <div className="flex flex-col items-center justify-center ">
-            <Image
-              src="/bg_img1.jpg"
-              alt="testimony"
-              width={1000}
-              height={1000}
-              className="relative h-[500px] w-[500px] rounded-full my-[60px] object-cover border-[10px] border-[#FEE5E5]"
-            />
+          {/* Thank You Section */}
+          <div className="mt-20 text-center">
+            <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mx-auto mb-12">
+              <Image
+                src="/bg_img1.jpg"
+                alt="testimony"
+                fill
+                className="rounded-full object-cover border-[10px] border-[#FEE5E5]"
+              />
+            </div>
 
-            <h3 className="text-black text-4xl font-bold text-center uppercase mt-[100px] font-merchant">
+            <h3 className="text-black text-3xl md:text-4xl font-bold text-center uppercase mt-12 font-merchant text-balance">
               Thank you for joining <br />
               in our celebration!
             </h3>
-            <p className="text-2xl leading-[38px] font-medium max-w-[521px] text-center mt-[60px] font-neue-montreal text-balance text-black mb-[100px]">
+            <p className="text-xl md:text-2xl leading-relaxed font-medium max-w-[521px] mx-auto text-center mt-8 font-neue-montreal text-balance text-black">
               Your download should start soon, don't forget to share your DP
               everywhere & also please take out time to pray for Rev Helen
               Oyegoke.
@@ -223,12 +252,12 @@ const Testimony = () => {
         </div>
       </section>
 
-      <footer className="border-t border-black py-14 border-dashed text-center">
-        <p className="text-black text-2xl font-neue-montreal">
+      <footer className="border-t border-black py-8 md:py-14 border-dashed">
+        <p className="text-black text-xl md:text-2xl text-center font-neue-montreal">
           Built by{" "}
           <Link
             href="https://www.egfm.org/"
-            className="text-black font-medium  underline"
+            className="text-black font-medium underline hover:text-gray-700 transition-colors"
           >
             EGFM
           </Link>{" "}

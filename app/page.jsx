@@ -1,5 +1,6 @@
 "use client";
 
+import CircleTextLogo from "@/app/components/circletextlogo";
 import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Image from "next/image";
@@ -93,11 +94,7 @@ export default function Home() {
     <>
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
-      <main
-        className={`min-h-screen text-white bg-black scroll-smooth ${
-          isLoading ? "hidden" : ""
-        }`}
-      >
+      <main className={`min-h-screen text-white`}>
         {/* Hero Section */}
         <div className="relative h-screen w-full overflow-hidden">
           {heroImages.map((image, index) => (
@@ -123,7 +120,7 @@ export default function Home() {
             className="absolute inset-0"
             style={{
               background: `linear-gradient(180deg, 
-                rgba(0, 0, 0, 0) ${isMobile ? "50%" : "40%"}, 
+                rgba(0, 0, 0, 0) ${isMobile ? "30%" : "40%"}, 
                 rgba(0, 0, 0, 1) ${isMobile ? "80%" : "90%"}
               )`,
             }}
@@ -135,14 +132,14 @@ export default function Home() {
               alt="60th Anniversary Logo"
               width={300}
               height={300}
-              className="w-16 h-16 md:size-32"
+              className="size-24 md:size-32"
               priority
               quality={95}
             />
           </div>
 
           {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-end px-28 max-w-full">
+          <div className="relative z-10 h-full flex flex-col justify-end px-4 md:px-8 lg:px-28">
             <div className="overflow-hidden">
               <motion.h1
                 initial={{ y: "100%" }}
@@ -152,7 +149,7 @@ export default function Home() {
                   duration: 1,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[250.58px] leading-none items-start"
+                className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[250.58px] leading-none flex justify-center"
               >
                 60!
               </motion.h1>
@@ -175,7 +172,7 @@ export default function Home() {
               alt="circle text"
               width={100}
               height={100}
-              className="lg:absolute static mt-8 lg:mt-0 lg:top-0 lg:right-5 w-80 md:w-48 lg:w-auto"
+              className="lg:absolute mt-8 lg:mt-0 lg:top-0 lg:right-5 w-80 md:w-48 lg:w-auto mx-auto lg:mx-0"
               quality={90}
               style={spinningStyle}
             />
@@ -249,8 +246,8 @@ export default function Home() {
               className="font-medium font-neue-montreal text-lg md:text-xl lg:text-[2rem] mb-8 leading-relaxed text-balance"
             />
 
-            <div className="flex items-center justify-center gap-4">
-              <Link href="/view-testimony">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
+              <Link href="/view-testimonies">
                 <button className="border border-[#F6B32B] hover:bg-[#F6B32B] hover:text-white transition-colors duration-300 text-[#F6B32B] px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
                   View testimonies
                 </button>
@@ -266,25 +263,8 @@ export default function Home() {
 
         <section className="my-10 md:my-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-10">
           <div className="space-y-12 md:space-y-24 mt-10 md:mt-20">
-            <div className="mx-auto relative">
-              <Image
-                src="/Group_6.svg"
-                alt="circle text"
-                width={300}
-                height={300}
-                className="mx-auto relative"
-                quality={90}
-                style={spinningStyle}
-              />
-              <Image
-                src="/logo3.png"
-                alt="60th Anniversary Logo"
-                width={100}
-                height={100}
-                className="size-32 absolute top-[30%] left-[35%]"
-                priority
-                quality={95}
-              />
+            <div className="flex items-center justify-center">
+              <CircleTextLogo />
             </div>
             <motion.div
               className="relative aspect-[3/4]  "
@@ -310,7 +290,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="mt-10 md:mt-40">
+          <div className="md:mt-40">
             <motion.div
               className="relative aspect-[3/4]"
               initial={{ y: 100, opacity: 0 }}
