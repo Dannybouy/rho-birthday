@@ -73,15 +73,15 @@ export default function Home() {
   const redDressImg = [
     {
       id: 1,
-      img: "/2a.jpg",
+      img: "/2a.png",
     },
     {
       id: 2,
-      img: "/2b.jpg",
+      img: "/2b.png",
     },
     {
       id: 3,
-      img: "/2c.jpg",
+      img: "/2c.png",
     },
   ];
 
@@ -94,7 +94,7 @@ export default function Home() {
     <>
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
-      <main className={`min-h-screen text-white`}>
+      <main className="min-h-screen text-white bg-black">
         {/* Hero Section */}
         <div className="relative h-screen w-full overflow-hidden">
           {heroImages.map((image, index) => (
@@ -149,7 +149,7 @@ export default function Home() {
                   duration: 1,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[250.58px] leading-none flex justify-center"
+                className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[250.58px] leading-none flex lg:justify-left"
               >
                 60!
               </motion.h1>
@@ -248,12 +248,12 @@ export default function Home() {
 
             <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
               <Link href="/view-testimonies">
-                <button className="border border-[#F6B32B] hover:bg-[#F6B32B] hover:text-white transition-colors duration-300 text-[#F6B32B] px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
+                <button className="border border-[#F6B32B] transition-colors duration-300 text-[#F6B32B] px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
                   View testimonies
                 </button>
               </Link>
               <Link href="/testimony">
-                <button className="bg-[#F6B32B] hover:border-[#F6B32B] hover:border hover:bg-transparent transition-colors duration-300 hover:text-[#F6B32B] px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
+                <button className="bg-[#F6B32B] hover:bg-[#b4831f] transition-colors duration-300 px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
                   Tell me about it
                 </button>
               </Link>
@@ -280,7 +280,7 @@ export default function Home() {
               }}
             >
               <Image
-                src="/4.jpg"
+                src="/4.png"
                 alt="red dress"
                 fill
                 sizes="100vw"
@@ -326,7 +326,7 @@ export default function Home() {
               }}
             >
               <Image
-                src="/6.jpg"
+                src="/6.png"
                 alt="red dress"
                 fill
                 sizes="100vw"
@@ -346,7 +346,7 @@ export default function Home() {
               }}
             >
               <Image
-                src="/7.jpg"
+                src="/7.png"
                 alt="red dress"
                 fill
                 sizes="100vw"

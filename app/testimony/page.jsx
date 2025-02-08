@@ -3,7 +3,6 @@
 import { ID } from "appwrite";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { storage } from "../appwrite/config";
@@ -97,6 +96,20 @@ const Testimony = () => {
           />
         </Link>
 
+        {/* Add navigation buttons */}
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10 flex gap-4 ">
+          <Link href="/">
+            <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B]">
+              Go Home
+            </button>
+          </Link>
+          <Link href="/view-testimonies">
+            <button className="px-4 py-2 border border-[#F6B32B] text-[#F6B32B] hover:bg-[#F6B32B] hover:text-black rounded-full transition-colors duration-300">
+              View Testimonies
+            </button>
+          </Link>
+        </div>
+
         <div className="flex flex-col lg:flex-row min-h-[400px] md:min-h-[600px]">
           {/* Text and Spinning Logo Section */}
           <div className="flex-1 p-4 md:p-8 lg:p-16 flex flex-col justify-center relative">
@@ -113,7 +126,6 @@ const Testimony = () => {
               quality={90}
               style={spinningStyle}
             />
-
           </div>
 
           {/* Image Section */}
@@ -152,7 +164,10 @@ const Testimony = () => {
             how mummy has blessed you
           </h3>
 
-          <form onSubmit={handleSubmit} className="space-y-8 md:space-y-14 text-black">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-8 md:space-y-14 text-black"
+          >
             {/* Name Input - Changed label color to black */}
             <div className="flex flex-col items-center space-y-2">
               <label

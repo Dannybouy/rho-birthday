@@ -1,6 +1,7 @@
 "use client";
 
 import { useGSAP } from "@gsap/react";
+import confetti from "canvas-confetti";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
@@ -8,6 +9,41 @@ export default function Preloader({ onComplete }) {
   const [counter, setCounter] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const preloaderRef = useRef(null);
+
+  const fireConfetti = () => {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function () {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 30 * (timeLeft / duration);
+      // Since particles fall down, start a bit higher than random
+      confetti(
+        Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 },
+          scalar: 1.5,
+        })
+      );
+      confetti(
+        Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 },
+          scalar: 1.5,
+        })
+      );
+    }, 250);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,13 +62,23 @@ export default function Preloader({ onComplete }) {
   useEffect(() => {
     if (counter === 60) {
       setTimeout(() => {
+        // First animate the text up
+        gsap.to(".sixty-text", {
+          yPercent: -100,
+          duration: 0.8,
+          ease: "power4.inOut",
+        });
+
+        // Then slide up the preloader after a small delay
         gsap.to(preloaderRef.current, {
           yPercent: -100,
           duration: 0.8,
+          delay: 0.1, // Small delay after text animation
           ease: "power4.inOut",
           onComplete: () => {
             setIsVisible(false);
             onComplete();
+            fireConfetti();
           },
         });
       }, 1000);
@@ -51,8 +97,8 @@ export default function Preloader({ onComplete }) {
       </h2>
 
       <p className="font-everett text-2xl">LOADING...</p>
-      <div className="self-end overflow-x-hidden">
-        <h1 className="font-merchant text-[200px]">{Math.floor(counter)}!</h1>
+      <div className="overflow-x-hidden">
+        <h1 className="sixty-text font-merchant text-[200px]">{Math.floor(counter)}!</h1>
       </div>
     </div>
   );
