@@ -82,7 +82,7 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-50 flex flex-col justify-center items-left bg-[#333333] text-white px-10 lg:px-40 overflow-x-hidden border-2"
+      className="fixed inset-0 z-50 flex flex-col justify-center items-left bg-[#333333] text-white px-10 lg:px-40 overflow-x-hidden"
     >
       <h2 className="font-everett text-[30px] md:text-[55px] uppercase mb-20 text-left">
         Reverend Helen Oyegoke
