@@ -33,7 +33,7 @@ const ViewTestimonies = () => {
         </div>
       </header>
       <div className="relative px-4 md:px-8 lg:px-12 mb-10">
-        <div className="fixed top-2/3 transform -translate-y-[60%] -translate-x-[10%] -z-10">
+        <div className="fixed top-2/3 transform -translate-y-[50%]  -z-10">
           <CircleTextLogo />
         </div>
         <div className="flex flex-col items-center justify-center">

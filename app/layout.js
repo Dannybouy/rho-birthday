@@ -36,7 +36,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
       <body
         className={`${merchant.variable} ${neueMontrealFontRegular.variable} ${neueMontrealFont.variable} ${everettFont.variable} antialiased`}
       >

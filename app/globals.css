@@ -12,7 +12,8 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} 
+
 
 body {
   color: var(--foreground);
@@ -21,8 +22,9 @@ body {
 }
 
 /* Add this to enable smooth scrolling for the whole website */
-html {
+html, body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 @keyframes spin {

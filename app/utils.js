@@ -10,7 +10,7 @@ export const testimoniesHeaderText = [
 ];
 
 export const testimonyText = [
-  "Mummy has been a blessing to us in many ways, we believe only the ",
+  "Mummy has been a blessing to us in many ways, we believe only the",
   "Lord can work this! Tell us, how have you been blessed by mummy",
 ];
 

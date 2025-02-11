@@ -8,7 +8,7 @@ const TestimonyCard = ({ testimony }) => {
   const imageUrl = storage.getFilePreview(bucketId, image, 100, 100);
 
   return (
-    <div className="bg-white rounded-3xl p-8 w-full min-h-[200px]">
+    <div className="bg-white rounded-3xl p-8 w-full min-h-[200px] max-w-[600px]">
       <div className="flex items-center justify-between gap-4 mb-4">
         <div className="flex items-center gap-3">
           <img

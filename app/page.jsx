@@ -6,7 +6,9 @@ import Lenis from "lenis";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Marquee from "react-fast-marquee";
 import HeroSectionText from "./components/hero-section-text";
+import HeroSection from "./components/HeroSection";
 import Preloader from "./components/Preloader";
 import {
   heroSectionTexts,
@@ -15,42 +17,7 @@ import {
 } from "./utils";
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
-  const heroImages = [
-    "/bg_img1.png",
-    "/bg_img2.png",
-    "/bg_img3.png",
-    "/bg_img4.png",
-  ];
-
-  // hero image change
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 2000); // Change image every 2 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Set initial value
-    handleResize();
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // Lenis for smooth scrolling
   useEffect(() => {
@@ -92,94 +59,31 @@ export default function Home() {
 
   return (
     <>
-      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      {isLoading && <Preloader onComplete={() => setIsLoading(true)} />}
 
-      <main className="min-h-screen text-white bg-black">
+      <div className="min-h-screen text-white bg-black">
         {/* Hero Section */}
-        <div className="relative h-screen w-full overflow-hidden">
-          {heroImages.map((image, index) => (
-            <div
-              key={image}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentImageIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={image}
-                alt={`Hero image ${index + 1}`}
-                fill
-                priority={index === 0}
-                className="object-cover"
-                quality={90}
-              />
-            </div>
-          ))}
-
-          {/* Dark overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(180deg, 
-                rgba(0, 0, 0, 0) ${isMobile ? "30%" : "40%"}, 
-                rgba(0, 0, 0, 1) ${isMobile ? "80%" : "90%"}
-              )`,
-            }}
-          ></div>
-
-          <div className="absolute top-4 md:top-8 left-4 md:left-8 z-10">
-            <Image
-              src="/logo3.png"
-              alt="60th Anniversary Logo"
-              width={300}
-              height={300}
-              className="size-24 md:size-32"
-              priority
-              quality={95}
-            />
-          </div>
-
-          {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-end px-4 md:px-8 lg:px-28">
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: "100%" }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 1,
-                  ease: [0.33, 1, 0.68, 1],
-                }}
-                className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[250.58px] leading-none flex lg:justify-left"
-              >
-                60!
-              </motion.h1>
-            </div>
-            <h1 className="text-[#f6f6f6] font-merchant text-[100px] md:text-[150px] lg:text-[230px] leading-none pb-14 text-center">
-              Aah! Ogaju!
-            </h1>
-          </div>
-        </div>
-
-        <section className="px-4 md:px-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center relative">
+        <HeroSection />
+        <section>
+          <div className="flex flex-col lg:flex-row items-center justify-between px-4 md:px-10">
             <HeroSectionText
               arrayOfText={heroSectionTexts}
-              containerClassName="text-[3vw] mt-20 font-everett"
-              className="m-0 text-2xl md:text-4xl lg:text-[50px] leading-tight lg:leading-[72px] lg:max-w-[1200px] uppercase text-center lg:text-left"
+              containerClassName="text-[5vw] mt-20 font-everett"
+              className="text-2xl md:text-4xl lg:text-[50px] leading-tight lg:leading-[72px] lg:max-w-[1200px] uppercase text-left text-balance"
             />
             <Image
               src="/Group_6.svg"
               alt="circle text"
               width={100}
               height={100}
-              className="lg:absolute mt-8 lg:mt-0 lg:top-0 lg:right-5 w-80 md:w-48 lg:w-auto mx-auto lg:mx-0"
+              className="mt-8 lg:mt-0 lg:top-0 lg:right-5 w-80 md:w-48 lg:w-auto mx-auto lg:mx-0"
               quality={90}
               style={spinningStyle}
             />
           </div>
 
           {/* Crown and Images Section */}
-          <div className="lg:mt-24 mt-10">
+          <div className="lg:mt-24 mt-20">
             <Image
               src="/crown.png"
               alt="crown vector"
@@ -189,7 +93,7 @@ export default function Home() {
               quality={90}
             />
             {/* Red Dress Images */}
-            <div className="overflow-hidden">
+            <div className="px-3">
               <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:gap-5">
                 {redDressImg.map((pic, index) => (
                   <motion.div
@@ -213,7 +117,6 @@ export default function Home() {
                       alt="red dress"
                       fill
                       sizes="100vw"
-                      className="object-contain"
                       quality={95}
                     />
                   </motion.div>
@@ -223,7 +126,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="my-10 md:my-20">
+        <section className="my-8 lg:my-10">
           <div className="aspect-video relative">
             <Image
               src="/3.png"
@@ -234,27 +137,27 @@ export default function Home() {
               quality={95}
             />
           </div>
-          <div className="mx-auto lg:my-[140px] my-10 text-center px-4 lg:max-w-5xl">
+          <div className="lg:my-[140px] md:my-[100px] my-10 px-4 lg:max-w-5xl mx-auto">
             <HeroSectionText
               arrayOfText={testimoniesHeaderText}
-              containerClassName=""
-              className="font-merchant text-4xl md:text-6xl lg:text-[5.5rem] mb-5 text-[#fff5e1] text-balance"
+              containerClassName="text-center mb-5"
+              className="font-merchant text-[2rem] md:text-6xl lg:text-[5.5rem] text-[#fff5e1]"
             />
             <HeroSectionText
               arrayOfText={testimonyText}
-              containerClassName=""
-              className="font-medium font-neue-montreal text-lg md:text-xl lg:text-[2rem] mb-8 leading-relaxed text-balance"
+              containerClassName="text-center"
+              className="font-medium font-neue-montreal text-lg md:text-xl lg:text-[2rem] text-balance md:mb-10"
             />
 
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 lg:mt-20 mt-10">
               <Link href="/view-testimonies">
-                <button className="border border-[#F6B32B] transition-colors duration-300 text-[#F6B32B] px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
+                <button className="border border-[#F6B32B] transition-colors duration-300 text-[#F6B32B] px-3 md:px-8 py-2.5 md:py-6 rounded-full font-merchant text-base md:text-xl lg:text-[2rem]">
                   View testimonies
                 </button>
               </Link>
               <Link href="/testimony">
-                <button className="bg-[#F6B32B] hover:bg-[#b4831f] transition-colors duration-300 px-6 md:px-8 py-4 md:py-6 rounded-full font-merchant text-lg md:text-xl lg:text-[2rem]">
-                  Tell me about it
+                <button className="bg-[#F6B32B] hover:bg-[#b4831f] transition-colors duration-300 px-3 md:px-8 py-2.5 md:py-6 rounded-full font-merchant text-base md:text-xl lg:text-[2rem]">
+                  Share your testimony
                 </button>
               </Link>
             </div>
@@ -262,7 +165,7 @@ export default function Home() {
         </section>
 
         <section className="my-10 md:my-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-10">
-          <div className="space-y-12 md:space-y-24 mt-10 md:mt-20">
+          <div className="space-y-12 md:space-y-24 mt-10 md:mt-20 z-10">
             <div className="flex items-center justify-center">
               <CircleTextLogo />
             </div>
@@ -290,7 +193,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="md:mt-40">
+          <div className="md:mt-40 z-10">
             <motion.div
               className="relative aspect-[3/4]"
               initial={{ y: 100, opacity: 0 }}
@@ -311,9 +214,30 @@ export default function Home() {
                 quality={95}
               />
             </motion.div>
+
+            <motion.div
+              className="relative aspect-[3/4]"
+              initial={{ y: 100, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 1,
+                delay: 0.2,
+                ease: [0.33, 1, 0.68, 1],
+              }}
+            >
+              <Image
+                src="/8.png"
+                alt="red dress"
+                width={1000}
+                height={1000}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </motion.div>
           </div>
 
-          <div className="space-y-4 md:space-y-10">
+          <div className="space-y-4 md:space-y-10 z-10">
             <motion.div
               className="relative aspect-[3/4]"
               initial={{ y: 100, opacity: 0 }}
@@ -357,15 +281,10 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="relative overflow-hidden w-full py-4 border-t border-white border-dashed">
-          <div className="animate-marquee whitespace-nowrap font-merchant opacity-80 text-neutral-100/70 text-[2.5rem] md:text-[5.2rem] lg:text-[9.9rem]">
-            <span className="mx-4">Mummy Helen @ 60</span>
-            <span className="mx-4">Mummy Helen @ 60</span>
-            <span className="mx-4">Mummy Helen @ 60</span>
-            <span className="mx-4">Mummy Helen @ 60</span>
-          </div>
+        <div className="relative overflow-hidden w-full py- border-t border-white border-dashed font-merchant text-neutral-100/70 text-[2.5rem] md:text-[5.2rem] lg:text-[9.9rem]">
+          <Marquee autoFill={true}>Mummy Helen @ 60</Marquee>
         </div>
-      </main>
+      </div>
     </>
   );
 }

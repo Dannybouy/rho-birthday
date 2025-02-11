@@ -64,7 +64,7 @@ const LoadMoreTestimonies = () => {
         {moreTestimonies.map((testimony) => (
           <div
             key={testimony.$id}
-            className="w-full max-w-[454px] break-inside-avoid mb-4"
+            className="w-full max-w-[500px] break-inside-avoid mb-4"
           >
             <TestimonyCard testimony={testimony} />
           </div>

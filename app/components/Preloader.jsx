@@ -1,6 +1,5 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import confetti from "canvas-confetti";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -62,13 +61,6 @@ export default function Preloader({ onComplete }) {
   useEffect(() => {
     if (counter === 60) {
       setTimeout(() => {
-        // First animate the text up
-        gsap.to(".sixty-text", {
-          yPercent: -100,
-          duration: 0.8,
-          ease: "power4.inOut",
-        });
-
         // Then slide up the preloader after a small delay
         gsap.to(preloaderRef.current, {
           yPercent: -100,
@@ -90,15 +82,15 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-50 flex flex-col items-start justify-center bg-[#333333] text-white px-4 lg:px-40 overflow-x-hidden"
+      className="fixed inset-0 z-50 flex flex-col justify-center items-left bg-[#333333] text-white px-10 lg:px-40 overflow-x-hidden border-2"
     >
-      <h2 className="font-everett text-[30px] md:text-[55px] uppercase mb-20 text-center lg:text-left">
+      <h2 className="font-everett text-[30px] md:text-[55px] uppercase mb-20 text-left">
         Reverend Helen Oyegoke
       </h2>
-
       <p className="font-everett text-2xl">LOADING...</p>
+
       <div className="overflow-x-hidden">
-        <h1 className="sixty-text font-merchant text-[200px]">{Math.floor(counter)}!</h1>
+        <h1 className="font-merchant text-[150px]">{Math.floor(counter)}!</h1>
       </div>
     </div>
   );

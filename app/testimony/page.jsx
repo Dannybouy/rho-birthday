@@ -81,40 +81,37 @@ const Testimony = () => {
     <div className="bg-white min-h-screen">
       <header className="bg-gradient-to-r from-[#2f060f] to-transparent bg-black text-white relative">
         {/* Back Link */}
-        <Link
-          href="/"
-          className="absolute top-4 left-4 md:top-8 md:left-8 z-10"
-        >
-          <Image
-            src="/logo3.png"
-            alt="60th Anniversary Logo"
-            width={300}
-            height={300}
-            className="size-24 md:size-32"
-            priority
-            quality={95}
-          />
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link
+            href="/"
+            className="absolute top-1 left-4 md:top-4 md:left-8 z-10"
+          >
+            <Image
+              src="/logo3.png"
+              alt="60th Anniversary Logo"
+              width={800}
+              height={800}
+              className="size-24 md:size-32"
+              priority
+              quality={95}
+            />
+          </Link>
 
-        {/* Add navigation buttons */}
-        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10 flex gap-4 ">
-          <Link href="/">
-            <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B]">
-              Go Home
-            </button>
-          </Link>
-          <Link href="/view-testimonies">
-            <button className="px-4 py-2 border border-[#F6B32B] text-[#F6B32B] hover:bg-[#F6B32B] hover:text-black rounded-full transition-colors duration-300">
-              View Testimonies
-            </button>
-          </Link>
+          {/* Add navigation buttons */}
+          <div className="absolute top-6 right-4 md:top-8 md:right-8 z-10 flex gap-4 ">
+            <Link href="/view-testimonies">
+              <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B]">
+                View Testimonies
+              </button>
+            </Link>
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row min-h-[400px] md:min-h-[600px]">
+        <div className="flex flex-col lg:flex-row min-h-[400px] md:min-h-[800px]">
           {/* Text and Spinning Logo Section */}
-          <div className="flex-1 p-4 md:p-8 lg:p-16 flex flex-col justify-center relative">
-            <h1 className="font-bold text-3xl md:text-5xl lg:text-[70px] italic uppercase font-merchant leading-tight md:leading-[80px] z-10 text-center lg:text-left">
-              Fill the air with <br />
+          <div className="flex-1 p-4 mt-20 lg:mt-0 md:p-8 lg:p-16 flex flex-col justify-center relative">
+            <h1 className="text-3xl md:text-4xl lg:text-[60px] 2xl:text-[70px] font-merchant leading-tight md:leading-[1.2] z-10 text-center lg:text-left max-w-[800px] text-balance">
+              Fill the air with <br className="hidden md:block" />
               your Testimonies
             </h1>
             <Image
@@ -122,20 +119,22 @@ const Testimony = () => {
               alt="circle text"
               width={200}
               height={200}
-              className="absolute hidden lg:block top-[50%] left-[70%] -translate-y-1/2"
+              className="absolute hidden lg:block top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] h-[150px] md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
               quality={90}
               style={spinningStyle}
             />
           </div>
 
           {/* Image Section */}
-          <div className="lg:w-[42%] h-[300px] md:h-[600px] relative">
+          <div className="w-full lg:w-1/2 h-[400px] md:h-[600px] lg:h-auto relative">
             <Image
-              src="/bg_img1.jpg"
+              src="/testimony_img.png"
               alt="testimony"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
               quality={90}
-              className="object-cover"
+              className="object-cover object-top"
+              priority
             />
           </div>
         </div>
@@ -247,10 +246,10 @@ const Testimony = () => {
           <div className="mt-20 text-center">
             <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mx-auto mb-12">
               <Image
-                src="/bg_img1.jpg"
+                src="/testimony_img.png"
                 alt="testimony"
                 fill
-                className="rounded-full object-cover border-[10px] border-[#FEE5E5]"
+                className="rounded-full object-cover object-top border-[10px] border-[#FEE5E5] mt"
               />
             </div>
 
