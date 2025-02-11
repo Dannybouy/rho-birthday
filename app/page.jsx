@@ -20,10 +20,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   const heroImages = [
-    "/bg_img1.jpg",
-    "/bg_img2.jpg",
-    "/bg_img3.jpg",
-    "/bg_img4.jpg",
+    "/bg_img1.png",
+    "/bg_img2.png",
+    "/bg_img3.png",
+    "/bg_img4.png",
   ];
 
   // hero image change
