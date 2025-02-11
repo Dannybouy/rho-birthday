@@ -43,7 +43,7 @@ const HeroSection = () => {
 
       {/* Dark overlay */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent/0 via-transparent/0 to-black"
+        className="absolute inset-0 bg-gradient-to-b from-transparent/0 via-transparent/0 to-black to-80%"
       ></div>
 
       <div className="absolute top-4 md:top-8 left-4 md:left-8 z-10">
