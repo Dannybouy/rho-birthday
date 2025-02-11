@@ -9,9 +9,9 @@ const ViewTestimonies = () => {
     <main className="min-h-screen">
       <header className="flex flex-col items-center justify-center mt-44">
         <div className="absolute top-4 md:top-8 left-4 md:left-8 z-10">
-          <Link href="/">
+          <a href="/">
             <Image
-              src="/logo3.png"
+              src="/logo3.png"  
               alt="60th Anniversary Logo"
               width={300}
               height={300}
@@ -19,7 +19,7 @@ const ViewTestimonies = () => {
               priority
               quality={95}
             />
-          </Link>
+          </a>
         </div>
         <div className="px-4 text-center mx-auto">
           <p className="font-merchant text-4xl md:text-6xl lg:text-[5.5rem] mb-5 text-[#fff5e1] text-balance max-w-screen-xl">

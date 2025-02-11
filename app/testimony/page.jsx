@@ -3,7 +3,7 @@
 import { ID } from "appwrite";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { storage } from "../appwrite/config";
 import db from "../appwrite/databases";
@@ -82,10 +82,7 @@ const Testimony = () => {
       <header className="bg-gradient-to-r from-[#2f060f] to-transparent bg-black text-white relative">
         {/* Back Link */}
         <div className="flex items-center justify-between">
-          <Link
-            href="/"
-            className="absolute top-1 left-4 md:top-4 md:left-8 z-10"
-          >
+          <a href="/" className="absolute top-1 left-4 md:top-4 md:left-8 z-10">
             <Image
               src="/logo3.png"
               alt="60th Anniversary Logo"
@@ -95,15 +92,15 @@ const Testimony = () => {
               priority
               quality={95}
             />
-          </Link>
+          </a>
 
           {/* Add navigation buttons */}
           <div className="absolute top-6 right-4 md:top-8 md:right-8 z-10 flex gap-4 ">
-            <Link href="/view-testimonies">
+            <a href="/view-testimonies">
               <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B]">
                 View Testimonies
               </button>
-            </Link>
+            </a>
           </div>
         </div>
 

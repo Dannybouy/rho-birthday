@@ -37,6 +37,10 @@ export default function Home() {
     requestAnimationFrame(raf);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const redDressImg = [
     {
       id: 1,
@@ -150,11 +154,11 @@ export default function Home() {
             />
 
             <div className="flex items-center justify-center gap-4 lg:mt-20 mt-10">
-              <Link href="/view-testimonies">
+              <a href="/view-testimonies">
                 <button className="border border-[#F6B32B] transition-colors duration-300 text-[#F6B32B] px-3 md:px-8 py-2.5 md:py-6 rounded-full font-merchant text-base md:text-xl lg:text-[2rem]">
                   View testimonies
                 </button>
-              </Link>
+              </a>
               <Link href="/testimony">
                 <button className="bg-[#F6B32B] hover:bg-[#b4831f] transition-colors duration-300 px-3 md:px-8 py-2.5 md:py-6 rounded-full font-merchant text-base md:text-xl lg:text-[2rem]">
                   Share your testimony
