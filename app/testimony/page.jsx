@@ -272,7 +272,7 @@ const Testimony = () => {
           >
             EGFM
           </Link>{" "}
-          Publicity Team
+           Communications{" "}
         </p>
       </footer>
     </div>

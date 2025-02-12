@@ -61,7 +61,7 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-end items-center pb-20 lg:pb-0">
         <h1 className="text-[#f6f6f6] font-merchant text-[72px] md:text-[140px] lg:text-[190px] text-center tracking-tight lg:max-w-max max-w-xl leading-none">
-          <span className="block lg:inline">60!;</span>
+          <span className="block lg:inline">60;</span>
           <span className="block lg:inline"> Aah! Ogaju!</span>
         </h1>
       </div>
