@@ -41,7 +41,7 @@ const Testimony = () => {
         image &&
         image.size > 0 &&
         image.type.startsWith("image/") &&
-        image.size < 1024 * 1024 * 5
+        image.size < 1024 * 1024 * 2
       ) {
         const response = await storage.createFile(bucketId, ID.unique(), image);
         imageID = response.$id;
@@ -204,7 +204,7 @@ const Testimony = () => {
                 required
                 className="w-full max-w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
               />
-              <p className="text-sm text-gray-500">Maximum file size is 5MB</p>
+              <p className="text-sm text-gray-500">Maximum file size is 2MB</p>
             </div>
 
             {/* Experience Textarea */}
@@ -254,11 +254,7 @@ const Testimony = () => {
               Thank you for joining <br />
               in our celebration!
             </h3>
-            <p className="text-xl md:text-2xl leading-relaxed font-medium max-w-[521px] mx-auto text-center mt-8 font-neue-montreal text-balance text-black">
-              Your download should start soon, don't forget to share your DP
-              everywhere & also please take out time to pray for Rev Helen
-              Oyegoke.
-            </p>
+            
           </div>
         </div>
       </section>
