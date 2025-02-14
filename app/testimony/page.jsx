@@ -13,24 +13,56 @@ const Testimony = () => {
     name: "",
     experience: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    experience: "",
+    image: "",
+  });
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      name: "",
+      experience: "",
+      image: "",
+    };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      isValid = false;
+    } else if (formData.name.length > 25) {
+      newErrors.name = "Name must be less than 25 characters";
+      isValid = false;
+    }
+
+    if (!formData.experience.trim()) {
+      newErrors.experience = "Experience is required";
+      isValid = false;
+    } else if (formData.experience.length > 555) {
+      newErrors.experience = "Experience must be less than 555 characters";
+      isValid = false;
+    }
+
+    if (!image) {
+      newErrors.image = "Image is required";
+      isValid = false;
+    } else if (image.size > 2 * 1024 * 1024) {
+      newErrors.image = "Image must be less than 2MB";
+      isValid = false;
+    } else if (!image.type.startsWith("image/")) {
+      newErrors.image = "File must be an image";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setLoading(true);
     const bucketId = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ID;
 
@@ -72,6 +104,42 @@ const Testimony = () => {
       setLoading(false);
     }
   };
+
+  // Update the input change handlers to clear errors
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setErrors((prev) => ({
+      ...prev,
+      image: "",
+    }));
+  };
+
+  // Add an error message component
+  const ErrorMessage = ({ message }) => (
+    <div
+      className="text-red-500 text-sm mt-1 transition-all duration-300 ease-in-out"
+      style={{
+        opacity: message ? 1 : 0,
+        height: message ? "auto" : 0,
+        transform: `translateY(${message ? "0" : "-10px"})`,
+      }}
+    >
+      {message}
+    </div>
+  );
 
   const spinningStyle = {
     animation: "spin 10s linear infinite",
@@ -181,9 +249,14 @@ const Testimony = () => {
                 onChange={handleInputChange}
                 maxLength={25}
                 placeholder="Max. limit is 25 characters"
-                required
-                className="w-full max-w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
+                className={`w-full max-w-[448px] h-[55px] border rounded-lg px-5 transition-all duration-300
+                  ${
+                    errors.name
+                      ? "border-red-500 bg-red-50"
+                      : "border-[#dadada]"
+                  }`}
               />
+              <ErrorMessage message={errors.name} />
             </div>
 
             {/* Image Upload - Changed label color to black */}
@@ -201,9 +274,16 @@ const Testimony = () => {
                 accept="image/png, image/jpeg, image/jpg"
                 onChange={handleImageChange}
                 name="image"
+                size={2 * 1024 * 1024}
                 required
-                className="w-full max-w-[448px] h-[55px] border border-[#dadada] rounded-lg px-5"
+                className={`w-full max-w-[448px] h-[55px] border rounded-lg px-5 transition-all duration-300
+                  ${
+                    errors.image
+                      ? "border-red-500 bg-red-50"
+                      : "border-[#dadada]"
+                  }`}
               />
+              <ErrorMessage message={errors.image} />
               <p className="text-sm text-gray-500">Maximum file size is 2MB</p>
             </div>
 
@@ -221,10 +301,16 @@ const Testimony = () => {
                 value={formData.experience}
                 onChange={handleInputChange}
                 maxLength={555}
-                required
+                
                 placeholder="Max. limit is 555 characters"
-                className="w-full max-w-[776px] h-[250px] bg-white border border-[#dadada] rounded-lg p-5 text-base"
+                className={`w-full max-w-[776px] h-[250px] bg-white border rounded-lg p-5 text-base transition-all duration-300
+                  ${
+                    errors.experience
+                      ? "border-red-500 bg-red-50"
+                      : "border-[#dadada]"
+                  }`}
               />
+              <ErrorMessage message={errors.experience} />
             </div>
 
             {/* Submit Button */}
@@ -254,7 +340,6 @@ const Testimony = () => {
               Thank you for joining <br />
               in our celebration!
             </h3>
-            
           </div>
         </div>
       </section>
