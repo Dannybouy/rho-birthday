@@ -338,38 +338,37 @@ export default function Home() {
         </div>
 
         {/* Music Control Button */}
-        {
-          !isLoading && (
-            <button
-              onClick={toggleAudio}
-          className={`fixed z-50 bg-[#F6B32B] hover:bg-[#b4831f] text-black px-4 py-2 rounded-full font-merchant transition-all duration-300 flex items-center gap-2
+        {!isLoading && (
+          <button
+            onClick={toggleAudio}
+            className={`fixed z-50 bg-[#F6B32B] hover:bg-[#b4831f] text-black px-4 py-2 rounded-full font-merchant transition-all duration-300 flex items-center gap-2
             ${isScrolled ? "bottom-6 right-6" : "top-10 right-6"}`}
-        >
-          {isPlaying ? (
-            <>
-              <span className="text-lg">Pause Music</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <rect x="6" y="4" width="4" height="16" />
-                <rect x="14" y="4" width="4" height="16" />
-              </svg>
-            </>
-          ) : (
-            <>
-              <span className="text-lg">Play Music</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M8 5v14l11-7z" />
+          >
+            {isPlaying ? (
+              <>
+                <span className="text-lg">Pause Music</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <rect x="6" y="4" width="4" height="16" />
+                  <rect x="14" y="4" width="4" height="16" />
+                </svg>
+              </>
+            ) : (
+              <>
+                <span className="text-lg">Play Music</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </>
             )}
