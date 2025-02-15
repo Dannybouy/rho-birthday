@@ -18,6 +18,8 @@ import {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const audioRef = useRef(null);
 
   // Lenis for smooth scrolling
@@ -42,12 +44,33 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 100); // Change position after 100px scroll
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Modify the audio playing useEffect
   useEffect(() => {
     if (!isLoading) {
-      const audio = new Audio("/audio.mp3");
-      audio.play();
+      audioRef.current = new Audio("/audio.mp3");
+      audioRef.current.addEventListener("ended", () => {
+        setIsPlaying(false);
+      });
     }
+
+    // Cleanup
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
   }, [isLoading]);
 
   const redDressImg = [
@@ -74,7 +97,16 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  console.log(isLoading);
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   return (
     <>
@@ -304,6 +336,45 @@ export default function Home() {
         <div className="relative overflow-hidden w-full py- border-t border-white border-dashed font-merchant text-neutral-100/70 text-[2.5rem] md:text-[5.2rem] lg:text-[9.9rem]">
           <Marquee autoFill={true}>Mummy Helen @ 60</Marquee>
         </div>
+
+        {/* Music Control Button */}
+        {
+          !isLoading && (
+            <button
+              onClick={toggleAudio}
+          className={`fixed z-50 bg-[#F6B32B] hover:bg-[#b4831f] text-black px-4 py-2 rounded-full font-merchant transition-all duration-300 flex items-center gap-2
+            ${isScrolled ? "bottom-6 right-6" : "top-10 right-6"}`}
+        >
+          {isPlaying ? (
+            <>
+              <span className="text-lg">Pause Music</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            </>
+          ) : (
+            <>
+              <span className="text-lg">Play Music</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M8 5v14l11-7z" />
+                </svg>
+              </>
+            )}
+          </button>
+        )}
       </div>
     </>
   );
