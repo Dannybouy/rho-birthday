@@ -1,7 +1,7 @@
 "use client";
 
 import CircleTextLogo from "@/app/components/circletextlogo";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Lenis from "lenis";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +20,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
   const audioRef = useRef(null);
 
   // Lenis for smooth scrolling
@@ -73,6 +74,27 @@ export default function Home() {
     };
   }, [isLoading]);
 
+  // Add effect to control body scroll
+  useEffect(() => {
+    if (showOverlay && !isLoading) {
+      // Prevent scrolling
+      document.body.style.overflow = "hidden";
+      // Store current scroll position
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      // Re-enable scrolling
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+      document.body.style.overflow = "";
+      // Restore scroll position
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
+  }, [showOverlay, isLoading]);
+
   const redDressImg = [
     {
       id: 1,
@@ -97,12 +119,17 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  const toggleAudio = () => {
+  const handleMusicClick = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
+        // Only remove overlay on first play
+        if (showOverlay) {
+          setShowOverlay(false);
+          // Scrolling will be re-enabled by the useEffect above
+        }
       }
       setIsPlaying(!isPlaying);
     }
@@ -112,7 +139,73 @@ export default function Home() {
     <>
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      <div className="min-h-screen text-white bg-black">
+      <div className="min-h-screen text-white bg-black relative">
+        {/* Overlay */}
+        <AnimatePresence>
+          {!isLoading && showOverlay && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 z-40 flex items-center justify-center"
+            >
+              <div className="text-center text-white text-3xl font-neue-montreal px-5">
+                Click the play Music button <br /> to start the celebration
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Music Control Button */}
+        {!isLoading && (
+          <div
+            className={`fixed z-50 ${
+              isScrolled ? "bottom-6" : "top-10"
+            } right-6`}
+          >
+            <motion.button
+              onClick={handleMusicClick}
+              className="relative bg-[#F6B32B] hover:bg-[#b4831f] text-black px-4 py-2 rounded-full font-merchant transition-all duration-300 flex items-center gap-2"
+            >
+              {/* Pulsing ring effect - only show when overlay is visible */}
+              {showOverlay && (
+                <span className="absolute inset-0 rounded-full animate-ping bg-[#F6B32B]/40"></span>
+              )}
+
+              {isPlaying ? (
+                <>
+                  <span className="text-lg relative z-10">Pause Music</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="relative z-10"
+                  >
+                    <rect x="6" y="4" width="4" height="16" />
+                    <rect x="14" y="4" width="4" height="16" />
+                  </svg>
+                </>
+              ) : (
+                <>
+                  <span className="text-lg relative z-10">Play Music</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="relative z-10"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </>
+              )}
+            </motion.button>
+          </div>
+        )}
+
         {/* Hero Section */}
         <HeroSection />
         <section>
@@ -336,44 +429,6 @@ export default function Home() {
         <div className="relative overflow-hidden w-full py- border-t border-white border-dashed font-merchant text-neutral-100/70 text-[2.5rem] md:text-[5.2rem] lg:text-[9.9rem]">
           <Marquee autoFill={true}>Mummy Helen @ 60</Marquee>
         </div>
-
-        {/* Music Control Button */}
-        {!isLoading && (
-          <button
-            onClick={toggleAudio}
-            className={`fixed z-50 bg-[#F6B32B] hover:bg-[#b4831f] text-black px-4 py-2 rounded-full font-merchant transition-all duration-300 flex items-center gap-2
-            ${isScrolled ? "bottom-6 right-6" : "top-10 right-6"}`}
-          >
-            {isPlaying ? (
-              <>
-                <span className="text-lg">Pause Music</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <rect x="6" y="4" width="4" height="16" />
-                  <rect x="14" y="4" width="4" height="16" />
-                </svg>
-              </>
-            ) : (
-              <>
-                <span className="text-lg">Play Music</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </>
-            )}
-          </button>
-        )}
       </div>
     </>
   );
