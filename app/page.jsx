@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
 import HeroSectionText from "./components/hero-section-text";
 import HeroSection from "./components/HeroSection";
@@ -18,6 +18,7 @@ import {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const audioRef = useRef(null);
 
   // Lenis for smooth scrolling
   useEffect(() => {
@@ -41,6 +42,14 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Modify the audio playing useEffect
+  useEffect(() => {
+    if (!isLoading) {
+      const audio = new Audio("/audio.mp3");
+      audio.play();
+    }
+  }, [isLoading]);
+
   const redDressImg = [
     {
       id: 1,
@@ -61,9 +70,15 @@ export default function Home() {
     animation: "spin 10s linear infinite",
   };
 
+  const handlePreloaderComplete = () => {
+    setIsLoading(false);
+  };
+
+  console.log(isLoading);
+
   return (
     <>
-      {isLoading && <Preloader onComplete={() => setIsLoading(true)} />}
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
       <div className="min-h-screen text-white bg-black">
         {/* Hero Section */}
@@ -75,6 +90,7 @@ export default function Home() {
               containerClassName="text-[5vw] mt-20 font-everett"
               className="text-2xl md:text-4xl lg:text-[50px] leading-tight lg:leading-[72px] lg:max-w-[1200px] uppercase text-left text-balance"
             />
+
             <Image
               src="/Group_6.svg"
               alt="circle text"
