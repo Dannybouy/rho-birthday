@@ -165,7 +165,7 @@ const Testimony = () => {
           {/* Add navigation buttons */}
           <div className="absolute top-6 right-4 md:top-8 md:right-8 z-10 flex gap-4 ">
             <a href="/view-testimonies">
-              <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B]">
+              <button className="px-4 py-2 bg-[#F6B32B] hover:bg-[#b4831f] text-black rounded-full transition-colors duration-300 font-medium border border-[#F6B32B] font-merchant">
                 View Testimonies
               </button>
             </a>
@@ -352,7 +352,7 @@ const Testimony = () => {
             className="text-black font-medium underline hover:text-gray-700 transition-colors"
           >
             EGFM
-          </Link>{" "}
+          </Link>
            Communications{" "}
         </p>
       </footer>
